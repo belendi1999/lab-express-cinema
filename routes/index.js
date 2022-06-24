@@ -2,7 +2,7 @@ const express = require('express');
 const Movie = require("../models/Movie.model.js")
 const router = express.Router();
 
-/* GET home page */
+
 router.get('/', (req, res, next) => res.render('index'))
 
 router.get("/movies", (req, res, next) => {
@@ -17,6 +17,19 @@ router.get("/movies", (req, res, next) => {
         next(err)
       });
     })
+
+    router.get("/movies/:id", (req, res, next) => {
+    
+        Movie.findById(req.params.id)
+          .then((response) => {
+            res.render("movies-details.hbs", { response });
+          })
+          .catch((err) => {
+            next(err);
+          });
+
+      });
+      
 
 
 module.exports = router;
